@@ -1,0 +1,13 @@
+library(httr)
+library(jsonlite)
+
+kunstner <- httr::GET("https://api.smk.dk/api/v1/art/search?keys=%2A&qfields=titles&qfields=creator&offset=0&rows=10%22")
+kunstnerindhold <- httr::content(kunstner, as = "text")
+kunstner1 <- jsonlite::fromJSON(kunstnerindhold)
+genderdata<-smk$items
+genderdatadf<-as.data.frame(genderdata$gender)
+genderdatadf<-t(genderdatadf)
+genderdataengelsk<-genderdatadf[,1]
+genderdatabind<-cbind(genderdataengelsk,genderdata)
+kønopdeling <- aggregate(genderdatabind[,1], by=list(genderdatabind[,1]), FUN=length)
+View(kønopdeling)

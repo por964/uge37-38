@@ -1,0 +1,10 @@
+library(eurostat)
+library(httr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(reshape2)
+
+df <- get_eurostat('prc_hpi_hsna', time_format = "num")
+
+my_df <- df[df$geo %in% c('DK', 'HU', 'ES'),]

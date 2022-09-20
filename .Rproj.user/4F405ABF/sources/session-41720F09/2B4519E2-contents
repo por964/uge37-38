@@ -1,0 +1,41 @@
+library(readr) # CSV file I/O, e.g. the read_csv function
+library(doParallel)
+library(benchmarkme)
+library(miscTools)
+
+# prepare df
+bnames <- c("user","ram","cpumodel","cpuhastighed","cores",
+         "crossprodI","lmI","sortI")
+
+df <- data.frame(matrix(ncol = 8, nrow = 0))
+
+colnames(df) <- bnames
+
+
+# now gather information from benchmarkme
+res <- benchmark_matrix_cal()
+vuser <- "python_lover"
+vram <- get_ram()/1000000000
+vram[1]
+v1 <- 0.78
+v2 <- 7.33
+v3 <- 0.59
+
+#prepare modelfields
+  
+# now extract info
+  
+vmod <- 'AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx 2.10 GHz'
+vspeed <- '2.10 GHz'
+vcores <- 4
+
+# collect into vector
+
+resv = c(vuser,vram,vmod,vspeed,vcores,v1,v2,v3)
+
+df2 <- data.frame(t(resv))
+colnames(df2) <- bnames
+
+df <- rbind(df,df2)
+
+# write to file "newout.csv"

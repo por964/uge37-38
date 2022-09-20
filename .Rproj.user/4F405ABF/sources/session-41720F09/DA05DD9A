@@ -1,0 +1,27 @@
+{
+    "id": "DA05DD9A",
+    "path": "C:/Dataanalyse/projects/uge37+38/clean_up.R",
+    "project_path": "clean_up.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1662970695914.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "5,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1662976749,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1662976749098,
+    "read_only": false,
+    "read_only_alternatives": []
+}

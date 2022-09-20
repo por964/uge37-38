@@ -1,0 +1,59 @@
+library(httr)
+library(jsonlite)
+library(rjson)
+
+# # give food (youtube-video)
+# gurl <- "https://www.givefood.org.uk/api/2/foodbanks/"
+# res <- httr::GET(gurl)
+# fcraw = httr::content(res, as="text")
+# fctab = jsonlite::fromJSON(fcraw)
+# dfgrpol <- aggregate(fctab$politics$mp_party, by = list(fctab$politics$mp_party),FUN = length)
+
+#### DOING SMK QUIZ SORT ####
+
+#TRIN 1. find url
+urlquiz <- "https://api.smk.dk/api/v1/person/search?keys=*&offset=0&rows=2000"
+#TRIN 2: GET url-response
+quizres <- httr::GET(urlquiz)
+#TRIN 3: Filtrer indhold for sig
+quizraw <- httr::content(quizres, as="text")
+#TRIN 4: Fra json til R-datastruktur
+dfquiz <- jsonlite::fromJSON(quizraw)
+#TRIN 5: Fra liste til dataframe
+dfquiz2 <- dfquiz$items
+str(dfquiz$items)
+
+#subset data-framen
+dfsubquiz2 <- dfquiz2[,c("surname","forename","works","nationality","birth_date_start")]
+
+# make a column for paintings
+dfsubquiz2$paintings <- unlist(lapply(dfsubquiz2$works, FUN=find.paintings))
+# count number of artworks
+
+dfsubquiz2$count <- length(dfsubquiz2$works)
+dfsubquiz2$count <- unlist(lapply(dfsubquiz2$works, FUN=length))
+# sort on count
+dfsubquiz2sorted <- dfsubquiz2[order(dfsubquiz2$count, decreasing = TRUE),]
+# find top 1/4 and pick those rows
+diffidx <- length(dfsubquiz2$surname)/5
+dfsubquiz2diff <- dfsubquiz2sorted[c(0:diffidx),]
+
+# helper-funtion to find paintings
+#dfsubquiz2[[4,3]]
+#tæl alle værker der starter med KMS, skal være i ny kolonne for kunstner
+
+find.paintings <- function(vec) {
+  retval = 0
+  # for-loop to filter on KMS
+  return(retval)
+}
+
+#### QUIZ DONE ####
+
+#### DOING GENDER SORT ####
+
+dfgender <- dfquiz2[,c("surname","forename","gender")]
+dfgender$ngender = unlist(lapply(dfgender$gender, function(x) x[[1]])) #just taking first element
+
+# aggregate on gender
+dfc = aggregate(dfgender$ngender, by=list(dfgender$ngender), FUN=length)
